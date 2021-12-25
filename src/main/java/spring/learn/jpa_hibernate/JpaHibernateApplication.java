@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import spring.learn.jpa_hibernate.entity.Course;
 import spring.learn.jpa_hibernate.repository.CourseJpaRepository;
 import spring.learn.jpa_hibernate.repository.PersonJdbcDao;
 import spring.learn.jpa_hibernate.repository.PersonJpaRepository;
+import spring.learn.jpa_hibernate.repository.relationship.StudentRepository;
 
 @SpringBootApplication
 @Slf4j
@@ -22,6 +22,9 @@ public class JpaHibernateApplication implements CommandLineRunner {
 
     @Autowired
     CourseJpaRepository courseJpaRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(JpaHibernateApplication.class, args);
@@ -41,11 +44,14 @@ public class JpaHibernateApplication implements CommandLineRunner {
         // log.info("User 10_001 -> {}", personJpaRepository.findById(10_001));
         // log.info("All users -> {}", personJpaRepository.findAll());
 
-        log.info("Course 1 -> {}", courseJpaRepository.findById(1L));
-        log.info("New Course -> {}", courseJpaRepository.save(new Course("History")));
+        // log.info("Course 1 -> {}", courseJpaRepository.findById(1L));
+        // log.info("New Course -> {}", courseJpaRepository.save(new Course("History")));
 
-        Course oldCourse = courseJpaRepository.findById(1L);
-        Course newCourse = new Course(oldCourse.getId(), "Arts");
-        log.info("Update Course -> {}", courseJpaRepository.save(newCourse));
+        // Course oldCourse = courseJpaRepository.findById(1L);
+        // Course newCourse = new Course(oldCourse.getId(), "Arts");
+        // log.info("Update Course -> {}", courseJpaRepository.save(newCourse));
+
+        log.info("Student: {}", studentRepository.findById(20001));
+        log.info("Saved Student with Passport: {}", studentRepository.saveWithPassport());
     }
 }
