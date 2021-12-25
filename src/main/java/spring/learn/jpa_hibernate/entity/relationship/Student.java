@@ -24,7 +24,8 @@ public class Student {
 
     // check relationship.sql
     // because `students` table has passport id, it now owns `passports`
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Passport passport;
 
     public Student(String name) {
