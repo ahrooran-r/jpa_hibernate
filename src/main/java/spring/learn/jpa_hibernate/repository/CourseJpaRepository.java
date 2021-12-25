@@ -97,6 +97,6 @@ public class CourseJpaRepository {
         // If I want to detach everything (course1, course2, ... ), then I have ti call
         em.clear();
 
-        // https://stackoverflow.com/a/4275973/10582056
+        // About flush: https://stackoverflow.com/a/4275973/10582056
     }
 }

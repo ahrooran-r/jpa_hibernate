@@ -7,8 +7,6 @@ import java.util.Date;
  * @ Entity name is used to refer your entity throughout the application, notably in HQL queries
  * <p>
  * @ Table is the actual DB table name
- * <p>
- * <a href=https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-type-conversions.html>Look here</a> for data conversions
  */
 @Entity(name = "Person")
 @Table(name = "person")
@@ -16,6 +14,9 @@ import java.util.Date;
 // here `Person` refers to `name` given in @Entity annotation -> @Entity(name = "Person")
 // note that JPQL is slightly different from MySQL
 public class Person {
+
+    // For data conversions between MySQL and Java:
+    // https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-type-conversions.html
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

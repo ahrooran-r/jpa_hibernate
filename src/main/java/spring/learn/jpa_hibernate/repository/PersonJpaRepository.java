@@ -16,7 +16,7 @@ public class PersonJpaRepository {
     // connects to database -> EntityManager is the interface to PersistenceContext.
     // PersistenceContext tracks each call and automatically changes any operations made on the object
     // https://www.baeldung.com/jpa-hibernate-persistence-context
-    // https://stackoverflow.com/a/58891587/10582056
+    // @Autowired vs @PersistenceContext -> https://stackoverflow.com/a/58891587/10582056
     @PersistenceContext
     EntityManager entityManager;
 
