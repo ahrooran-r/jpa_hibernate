@@ -22,8 +22,20 @@ public class Student {
     @Column(nullable = false, length = 100)
     private String name;
 
-    // check relationship.sql
-    // because `students` table has passport id, it now owns `passports`
+    // create table students(
+    //     id          int          not null auto_increment,
+    //     name        varchar(100) not null,
+    //     passport_id int          not null unique,
+    //     primary key (id),
+    //     foreign key (passport_id) references passports (id)
+    // );
+
+    // A TABLE (a) WHICH HAS FOREIGN KEY OF ANOTHER TABLE (b), OWNS THE OTHER TABLE (b) [`a` owns `b`]
+
+    // because `students` table has `passport_id` as foreign key =>
+    // `Student` now OWNS `Passport`
+    // So, here it is annotated with @OneToOne -> but this is not for the case of `Passport`
+
     @OneToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     private Passport passport;

@@ -29,6 +29,8 @@ create table students
     foreign key (passport_id) references passports (id)
 );
 
+# `students` table owns `passports` table because foreign key is in `students` table
+
 # one subject can have many reviews
 # but one review only associated with 1 subject
 # so one to many
@@ -76,4 +78,6 @@ values (40001, 5, 'Excellent'),
        (40002, 3, 'Good'),
        (40003, 1, 'Wtf! is this :(');
 
-select * from students inner join passports p on students.passport_id = p.id;
+select *
+from students
+         inner join passports p on students.passport_id = p.id;
