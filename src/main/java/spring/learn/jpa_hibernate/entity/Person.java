@@ -34,10 +34,13 @@ public class Person {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "location")
+    // length -> similar to length given within () like varchar(100) in mysql
+    @Column(name = "location", length = 100)
     private String location;
 
-    @Column(name = "birth_date")
+    // nullable -> means birthDate cannot have null value -> similar to `not null` in mysql
+    // unique -> similar to `unique` in mysql
+    @Column(name = "birth_date", nullable = false)
     private Date birthDate;
 
     /**
