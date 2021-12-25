@@ -51,7 +51,7 @@ public class JpaHibernateApplication implements CommandLineRunner {
         // Course newCourse = new Course(oldCourse.getId(), "Arts");
         // log.info("Update Course -> {}", courseJpaRepository.save(newCourse));
 
-        log.info("Student: {}", studentRepository.findById(20001));
-        log.info("Saved Student with Passport: {}", studentRepository.saveWithPassport());
+        // log.info("Student: {}", studentRepository.findById(20001));
+        // log.info("Saved Student with Passport: {}", studentRepository.saveWithPassport());
     }
 }
