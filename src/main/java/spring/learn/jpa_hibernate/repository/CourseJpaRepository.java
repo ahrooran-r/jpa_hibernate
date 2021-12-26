@@ -98,5 +98,8 @@ public class CourseJpaRepository {
         em.clear();
 
         // About flush: https://stackoverflow.com/a/4275973/10582056
+        // Note that even after I flush some part of the code, and in latter part there are some errors,
+        // Hibernate will roll back to the beginning of the method REGARDLESS of previous flushes executed or not
+        // So, in case of errors it doesn't matter we flushed the previous part of method
     }
 }

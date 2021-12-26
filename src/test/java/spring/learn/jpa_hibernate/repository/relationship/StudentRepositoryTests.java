@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
 @Slf4j
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JpaHibernateApplication.class)
-public class StudentRepositoryTest {
+public class StudentRepositoryTests {
 
     @PersistenceContext
     EntityManager em;
@@ -190,4 +190,9 @@ public class StudentRepositoryTest {
         log.info("Calling Student from Passport -> {}", student);
 
     }
+
+    // @DirtiesContext -> this is a very important annotation when it comes to testing
+    // Use when we change data in database while testing
+    // This will reset the data as it was before after unit test completes
+    // look for usage in `CourseRepositoryTests.class`
 }
