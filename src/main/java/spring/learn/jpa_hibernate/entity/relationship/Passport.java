@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+// ---------------------------
 @Entity
 @Table(name = "passports")
 public class Passport {
