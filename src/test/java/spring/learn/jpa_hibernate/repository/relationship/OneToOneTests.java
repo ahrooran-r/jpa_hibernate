@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
 @Slf4j
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JpaHibernateApplication.class)
-public class StudentRepositoryTests {
+public class OneToOneTests {
 
     @PersistenceContext
     EntityManager em;
@@ -25,6 +25,7 @@ public class StudentRepositoryTests {
     @Autowired
     StudentRepository studentDao;
 
+    // Eager fetch doesn't need transactional annotation -> because it fetches everything at single go
     @Test
     public void eagerFetchExample() {
 
@@ -188,7 +189,6 @@ public class StudentRepositoryTests {
         // call student from passport
         Student student = passport.getStudent();
         log.info("Calling Student from Passport -> {}", student);
-
     }
 
     // @DirtiesContext -> this is a very important annotation when it comes to testing

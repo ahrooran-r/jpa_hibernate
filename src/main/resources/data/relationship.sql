@@ -1,5 +1,4 @@
 drop table if exists subjects, students, passports, reviews, subject_student;
-drop table if exists subjects;
 
 create table subjects
 (
@@ -33,7 +32,8 @@ create table students
 
 # one subject can have many reviews
 # but one review only associated with 1 subject
-# so one to many
+# so one to many -> 1...n -> subjects..reviews
+# because review has `foreign key`, it is the owning side of this relationship
 create table reviews
 (
     id          int           not null auto_increment,
@@ -73,11 +73,13 @@ values (20001, 'Adam', 30001),
        (20002, 'Eve', 30002),
        (20003, 'SomeOtherDude', 30003);
 
-insert into reviews(id, rating, description)
-values (40001, 5, 'Excellent'),
-       (40002, 3, 'Good'),
-       (40003, 1, 'Wtf! is this :(');
+insert into reviews(id, rating, description, subject_id)
+values (40001, 5, 'Excellent', 10001),
+       (40002, 3, 'Good', 10001),
+       (40003, 1, 'Wtf! is this :(', 10003);
 
 select *
 from students
          inner join passports p on students.passport_id = p.id;
+
+select * from subjects left join reviews r on subjects.id = r.subject_id;
