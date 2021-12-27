@@ -64,7 +64,7 @@ public class ManyToManyTests {
     }
 
     @Test
-    public void test_addStudentsToSubject() {
+    public void test_addStudentsToSubject_Method1() {
 
         // adding students to non-owning side subject
 
@@ -72,7 +72,7 @@ public class ManyToManyTests {
 
         List<Integer> studentIds = Arrays.asList(20_002, 20_003);
 
-        subjectRepository.addStudentsToSubject(subjectId, studentIds);
+        subjectRepository.addStudentsToSubject_Method_1(subjectId, studentIds);
 
         // NOTE: You can see this is a bit different.
         // Rather than creating student objects and feed them into subject class,
@@ -99,6 +99,28 @@ public class ManyToManyTests {
         // Otherwise just send their ids only
         // https://stackoverflow.com/a/6222624/10582056
     }
+
+    @Test
+    @Transactional
+    public void test_addStudentsToSubject_Method2() {
+
+        int subjectId = 10_002;
+
+        Student s1 = studentRepository.findById(20_002);
+        Student s2 = studentRepository.findById(20_003);
+        List<Student> students = Arrays.asList(s1, s2);
+
+        subjectRepository.addStudentsToSubject_Method2(subjectId, students);
+
+        // Note that in this case, both `test_addStudentsToSubject_Method2()`
+        // and `SubjectRepository#addStudentsToSubject_Method2` have been annotated with @Transactional
+        // This is a bizarre case
+        // Because we are retrieving the student entity from database rather than creating them fresh,
+        // we need to do a merge in the inner method to transfer `s1` and `s2` from outer method to the inner method
+        // This is because both outer and inner methods are separately annotated and both are 2 DIFFERENT PERSISTENCE CONTEXTS
+
+    }
+
 
     @Test
     @Transactional

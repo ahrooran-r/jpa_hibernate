@@ -69,7 +69,7 @@ public class SubjectRepository {
     /**
      * @see StudentRepository#addSubjectsToStudents(int, List)
      */
-    public void addStudentsToSubject(int subjectId, List<Integer> studentIds) {
+    public void addStudentsToSubject_Method_1(int subjectId, List<Integer> studentIds) {
 
         // 1. retrieve subject
         Subject subject = findById(subjectId);
@@ -93,4 +93,38 @@ public class SubjectRepository {
 
         em.persist(subject);
     }
+
+    /**
+     * This is a bizarre case involving 2 transactions.
+     * <p>
+     * see ManyToManyTests#test_addStudentsToSubject_Method2
+     */
+    public void addStudentsToSubject_Method2(int subjectId, List<Student> students) {
+
+        // 1. retrieve subject
+        Subject subject = findById(subjectId);
+
+        students.forEach(student -> {
+
+            /*
+                persist(entity) should be used with totally new entities, to add them to DB (if entity already
+                exists in DB there will be EntityExistsException throw).
+
+                merge(entity) should be used, to put entity back to persistence context if the entity was detached
+                and was changed.
+             */
+
+            // merge student
+            // because we retrieved student from another transaction
+            // so to make it accessible here, we have to merge it
+            // merge -> Merge the state of the given entity into the current persistence context.
+            // https://stackoverflow.com/a/70495530/10582056
+            em.merge(student);
+
+            subject.addStudent(student);
+
+            student.addSubject(subject);
+        });
+    }
+
 }
