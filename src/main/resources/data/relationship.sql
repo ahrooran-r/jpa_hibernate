@@ -1,8 +1,11 @@
+# drop database if exists spring_jpa;
+# create database if not exists spring_jpa;
+# use spring_jpa;
 drop table if exists subjects, students, passports, reviews, subject_student;
 
 create table subjects
 (
-    id   int          not null auto_increment,
+    id   int auto_increment,
     name varchar(100) not null unique,
     primary key (id)
 );
@@ -10,7 +13,7 @@ create table subjects
 # https://stackoverflow.com/a/223491/10582056
 create table passports
 (
-    id     int         not null auto_increment,
+    id     int auto_increment,
     number varchar(14) not null unique,
     primary key (id)
 );
@@ -21,7 +24,7 @@ create table passports
 
 create table students
 (
-    id          int          not null auto_increment,
+    id          int auto_increment,
     name        varchar(100) not null,
     passport_id int          not null unique,
     primary key (id),
@@ -51,7 +54,6 @@ create table subject_student
 (
     subject_id int not null,
     student_id int not null,
-    primary key (subject_id, student_id),
     foreign key (subject_id) references subjects (id),
     foreign key (student_id) references students (id)
 );
@@ -78,6 +80,14 @@ values (40001, 5, 'Excellent', 10001),
        (40002, 3, 'Good', 10001),
        (40003, 1, 'Wtf! is this :(', 10003);
 
+SET FOREIGN_KEY_CHECKS=0;
+insert into subject_student
+values (10001, 20002),
+       (10001, 20003),
+       (10003, 20002),
+       (10002, 20001);
+SET FOREIGN_KEY_CHECKS=1;
+
 select *
 from students
          inner join passports p on students.passport_id = p.id;
@@ -85,3 +95,11 @@ from students
 select subjects.id as 'subjects.id', r.id as 'reviews.id', name, rating, description
 from subjects
          left join reviews r on subjects.id = r.subject_id;
+
+select subjects.id, subjects.name, students.id, students.name
+from subjects
+         left join subject_student on subjects.id = subject_student.subject_id
+         left join students on subject_student.student_id = students.id;
+
+select *
+from subject_student;

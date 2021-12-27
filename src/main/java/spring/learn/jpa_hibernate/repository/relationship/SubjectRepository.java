@@ -65,4 +65,32 @@ public class SubjectRepository {
             // in-fact we can do these 3 steps in ANY ORDER and result will be the same
         });
     }
+
+    /**
+     * @see StudentRepository#addSubjectsToStudents(int, List)
+     */
+    public void addStudentsToSubject(int subjectId, List<Integer> studentIds) {
+
+        // 1. retrieve subject
+        Subject subject = findById(subjectId);
+
+        // 2. add students
+        studentIds.forEach(id -> {
+
+            // retrieve student
+            Student student = em.find(Student.class, id);
+
+            // 2.2 add student to subject
+            subject.addStudent(student);
+
+            // 2.3 add subject to student
+            // must do both 2.1 and 2.2 because ManyToMany relationship
+            student.addSubject(subject);
+
+            // 2.1 persist student
+            em.persist(student);
+        });
+
+        em.persist(subject);
+    }
 }

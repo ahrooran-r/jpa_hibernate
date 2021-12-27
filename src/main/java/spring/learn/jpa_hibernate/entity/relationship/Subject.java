@@ -37,11 +37,27 @@ public class Subject {
     // because one subject has many reviews -> we use @OneToMany here
     // Review is the owning part -> hence its attribute `subject` is set to `mapped by`
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subjects")
+    @ToString.Exclude
+    private List<Student> students = new ArrayList<>();
+
+    public Subject(String name) {
+        this.name = name;
+    }
+
     public void addReview(Review review) {
         reviews.add(review);
     }
 
     public void removeReview(Review review) {
         reviews.remove(review);
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+
+    public void removeStudent(Student student) {
+        students.remove(student);
     }
 }
