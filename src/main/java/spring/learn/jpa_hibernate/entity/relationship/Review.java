@@ -33,7 +33,7 @@ public class Review {
 
     // Many Reviews map to one course
     // If you take a look at SQL for Review -> relationship.sql
-    // you can see `reviews` table has `foreign key` attribute => hence it is the owning part in this relationship
+    // you can see `reviews` table has `foreign key` attribute => hence `review` is the owning part in this relationship
     // so `mapped by` should be added to Subject
 
 

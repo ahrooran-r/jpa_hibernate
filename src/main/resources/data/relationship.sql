@@ -82,4 +82,6 @@ select *
 from students
          inner join passports p on students.passport_id = p.id;
 
-select * from subjects left join reviews r on subjects.id = r.subject_id;
+select subjects.id as 'subjects.id', r.id as 'reviews.id', name, rating, description
+from subjects
+         left join reviews r on subjects.id = r.subject_id;
