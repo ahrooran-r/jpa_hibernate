@@ -52,7 +52,7 @@ public class StudentRepository {
     }
 
     /**
-     * @see SubjectRepository#addStudentsToSubject(int, List)
+     * see SubjectRepository#addStudentsToSubject(int, List)
      */
     public void addSubjectsToStudents(int studentId, List<Subject> subjects) {
 

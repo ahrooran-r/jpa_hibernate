@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import spring.learn.jpa_hibernate.JpaHibernateApplication;
 import spring.learn.jpa_hibernate.entity.relationship.Review;
@@ -64,45 +65,11 @@ public class ManyToManyTests {
     }
 
     @Test
-    public void test_addStudentsToSubject_Method1() {
-
-        // adding students to non-owning side subject
-
-        int subjectId = 10_002;
-
-        List<Integer> studentIds = Arrays.asList(20_002, 20_003);
-
-        subjectRepository.addStudentsToSubject_Method_1(subjectId, studentIds);
-
-        // NOTE: You can see this is a bit different.
-        // Rather than creating student objects and feed them into subject class,
-        // I am sending student ids
-        // this is because for subject to add students -> all students must be
-        // already associated with a passport (remember the constraints)
-        // This gives us NO CHOICE but to
-        //      1. Retrieve student from database
-        //      2. Do operations on it
-        //      3. Then persisting it again
-        // This is impossible to do in 2 separate sessions -> can only be done in a single method
-
-        // So instead of doing following approach:
-        /*
-            List<Student> students = Arrays.asList(em.find(Student.class, 20_002), em.find(Student.class, 20_003));
-            subjectRepository.addStudentsToSubject(subjectId, students);
-        */
-        // Because, inner method has its own transaction, hence the retrieved list cannot be extended to inner method
-        // So instead, I am directly passing student ids within the inner method
-        // Now it works
-
-        // So remember: whenever there is a need to feed a retrieved entity to another inner method,
-        // the inner method should not have @Transactional of its own
-        // Otherwise just send their ids only
-        // https://stackoverflow.com/a/6222624/10582056
-    }
-
-    @Test
     @Transactional
-    public void test_addStudentsToSubject_Method2() {
+    @Rollback(value = false)
+    // By default, all tests will roll back if they are annotated with @Transactional.
+    // So we have to explicitly set it to false.
+    public void test_addStudentsToSubject() {
 
         int subjectId = 10_002;
 
@@ -110,15 +77,7 @@ public class ManyToManyTests {
         Student s2 = studentRepository.findById(20_003);
         List<Student> students = Arrays.asList(s1, s2);
 
-        subjectRepository.addStudentsToSubject_Method2(subjectId, students);
-
-        // Note that in this case, both `test_addStudentsToSubject_Method2()`
-        // and `SubjectRepository#addStudentsToSubject_Method2` have been annotated with @Transactional
-        // This is a bizarre case
-        // Because we are retrieving the student entity from database rather than creating them fresh,
-        // we need to do a merge in the inner method to transfer `s1` and `s2` from outer method to the inner method
-        // This is because both outer and inner methods are separately annotated and both are 2 DIFFERENT PERSISTENCE CONTEXTS
-
+        subjectRepository.addStudentsToSubject(subjectId, students);
     }
 
 

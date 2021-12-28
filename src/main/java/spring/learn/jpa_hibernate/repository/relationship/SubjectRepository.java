@@ -67,64 +67,31 @@ public class SubjectRepository {
     }
 
     /**
-     * @see StudentRepository#addSubjectsToStudents(int, List)
-     */
-    public void addStudentsToSubject_Method_1(int subjectId, List<Integer> studentIds) {
-
-        // 1. retrieve subject
-        Subject subject = findById(subjectId);
-
-        // 2. add students
-        studentIds.forEach(id -> {
-
-            // retrieve student
-            Student student = em.find(Student.class, id);
-
-            // 2.2 add student to subject
-            subject.addStudent(student);
-
-            // 2.3 add subject to student
-            // must do both 2.1 and 2.2 because ManyToMany relationship
-            student.addSubject(subject);
-
-            // 2.1 persist student
-            em.persist(student);
-        });
-
-        em.persist(subject);
-    }
-
-    /**
      * This is a bizarre case involving 2 transactions.
      * <p>
-     * see ManyToManyTests#test_addStudentsToSubject_Method2
+     * When 2 transactions are involved if they are in same instance like this, they will be treated as one
+     * <p>
+     * So the `student` entity which was retrieved and tracked in the outer method will still be tracked
+     * in this inner method as well.
+     * <p>
+     * Because we are only retrieving both `subject` and `students` entities from datasource
+     * and NOT CREATING ANY NEW ENTITIES, both are already been tracked by PersistenceContext.
+     * <p>
+     * So we DON'T even need to do any merge() or persist(). It will automatically do the transaction.
      */
-    public void addStudentsToSubject_Method2(int subjectId, List<Student> students) {
+    public void addStudentsToSubject(int subjectId, List<Student> students) {
+
+        // For details on 2 transactions: https://stackoverflow.com/a/6222624/10582056
 
         // 1. retrieve subject
         Subject subject = findById(subjectId);
 
+        // 2. create relationships
         students.forEach(student -> {
-
-            /*
-                persist(entity) should be used with totally new entities, to add them to DB (if entity already
-                exists in DB there will be EntityExistsException throw).
-
-                merge(entity) should be used, to put entity back to persistence context if the entity was detached
-                and was changed.
-             */
-
-            // merge student
-            // because we retrieved student from another transaction
-            // so to make it accessible here, we have to merge it
-            // merge -> Merge the state of the given entity into the current persistence context.
-            // https://stackoverflow.com/a/70495530/10582056
-            em.merge(student);
 
             subject.addStudent(student);
 
             student.addSubject(subject);
         });
     }
-
 }
