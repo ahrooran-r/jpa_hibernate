@@ -1,16 +1,18 @@
 package spring.learn.jpa_hibernate.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import spring.learn.jpa_hibernate.entity.Course;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 
 @Repository
 // @Transactional -> a transaction is automatically started when entering the method and committed / rolled back at the end.
-@Transactional
+// NOTE: make sure to import Spring annotation -> import org.springframework.transaction.annotation.Transactional;
+@Transactional(isolation = Isolation.READ_COMMITTED)
 public class CourseJpaRepository {
 
     @PersistenceContext
