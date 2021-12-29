@@ -62,7 +62,8 @@ create table subject_student
 insert into subjects(id, name)
 values (10001, 'Arts'),
        (10002, 'History'),
-       (10003, 'Comp. Sci.');
+       (10003, 'Comp. Sci.'),
+       (10004, 'Commerce');
 
 insert into passports(id, number)
 values (30001, 'E12345'),
@@ -80,26 +81,19 @@ values (40001, 5, 'Excellent', 10001),
        (40002, 3, 'Good', 10001),
        (40003, 1, 'Wtf! is this :(', 10003);
 
-SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS = 0;
 insert into subject_student
 values (10001, 20002),
        (10001, 20003),
        (10003, 20002),
        (10002, 20001);
-SET FOREIGN_KEY_CHECKS=1;
+SET FOREIGN_KEY_CHECKS = 1;
 
+# following are equivalent MySQL queries for JPQL ones in JOQLRelationshipTest.class
+
+# select subject which does not have any student
 select *
-from students
-         inner join passports p on students.passport_id = p.id;
-
-select subjects.id as 'subjects.id', r.id as 'reviews.id', name, rating, description
 from subjects
-         left join reviews r on subjects.id = r.subject_id;
+where subjects.id not in (select distinct subject_id from subject_student);
 
-select subjects.id, subjects.name, students.id, students.name
-from subjects
-         left join subject_student on subjects.id = subject_student.subject_id
-         left join students on subject_student.student_id = students.id;
-
-select *
-from subject_student;
+select * from subjects join students s on subjects.name = s.name;
