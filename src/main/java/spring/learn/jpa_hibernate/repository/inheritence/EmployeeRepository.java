@@ -1,6 +1,7 @@
 package spring.learn.jpa_hibernate.repository.inheritence;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import spring.learn.jpa_hibernate.entity.inheritence.Employee;
 import spring.learn.jpa_hibernate.entity.inheritence.FullTimeEmployee;
 import spring.learn.jpa_hibernate.entity.inheritence.PartTimeEmployee;
@@ -8,7 +9,6 @@ import spring.learn.jpa_hibernate.entity.inheritence.PartTimeEmployee;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /*

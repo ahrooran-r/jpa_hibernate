@@ -2,11 +2,11 @@ package spring.learn.jpa_hibernate.repository.relationship;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import spring.learn.jpa_hibernate.entity.relationship.Review;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 @Slf4j
 @Repository

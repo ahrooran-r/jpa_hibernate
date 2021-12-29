@@ -5,9 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import spring.learn.jpa_hibernate.entity.inheritence.Employee;
-import spring.learn.jpa_hibernate.entity.inheritence.FullTimeEmployee;
-import spring.learn.jpa_hibernate.entity.inheritence.PartTimeEmployee;
 import spring.learn.jpa_hibernate.repository.CourseJpaRepository;
 import spring.learn.jpa_hibernate.repository.PersonJdbcDao;
 import spring.learn.jpa_hibernate.repository.PersonJpaRepository;
@@ -61,14 +58,14 @@ public class JpaHibernateApplication implements CommandLineRunner {
         // log.info("Student: {}", studentRepository.findById(20001));
         // log.info("Saved Student with Passport: {}", studentRepository.saveWithPassport());
 
-        Employee fullTimeEmployee = new FullTimeEmployee("Panda", 10000);
-        Employee partTimeEmployee = new PartTimeEmployee("Bear", 50);
-
-        employeeRepository.saveEmployee(fullTimeEmployee);
-        employeeRepository.saveEmployee(partTimeEmployee);
-
-        // log.info("All employees = {}", employeeRepository.findAll());
-        log.info("All part time employees = {}", employeeRepository.findAllPartTimeEmployees());
-        log.info("All full time employees = {}", employeeRepository.findAllFullTimeEmployees());
+        // Employee fullTimeEmployee = new FullTimeEmployee("Panda", 10000);
+        // Employee partTimeEmployee = new PartTimeEmployee("Bear", 50);
+        //
+        // employeeRepository.saveEmployee(fullTimeEmployee);
+        // employeeRepository.saveEmployee(partTimeEmployee);
+        //
+        // // log.info("All employees = {}", employeeRepository.findAll());
+        // log.info("All part time employees = {}", employeeRepository.findAllPartTimeEmployees());
+        // log.info("All full time employees = {}", employeeRepository.findAllFullTimeEmployees());
     }
 }

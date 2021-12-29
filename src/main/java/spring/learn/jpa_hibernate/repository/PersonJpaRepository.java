@@ -1,12 +1,12 @@
 package spring.learn.jpa_hibernate.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import spring.learn.jpa_hibernate.entity.Person;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
