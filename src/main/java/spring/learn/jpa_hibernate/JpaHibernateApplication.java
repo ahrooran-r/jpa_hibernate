@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import spring.learn.jpa_hibernate.repository.CourseJpaRepository;
-import spring.learn.jpa_hibernate.repository.PersonJdbcDao;
-import spring.learn.jpa_hibernate.repository.PersonJpaRepository;
+import spring.learn.jpa_hibernate.repository.basics.CourseJpaRepository;
+import spring.learn.jpa_hibernate.repository.basics.PersonJdbcDao;
+import spring.learn.jpa_hibernate.repository.basics.PersonJpaRepository;
 import spring.learn.jpa_hibernate.repository.inheritence.EmployeeRepository;
 import spring.learn.jpa_hibernate.repository.relationship.StudentRepository;
 

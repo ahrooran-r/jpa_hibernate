@@ -1,8 +1,8 @@
-package spring.learn.jpa_hibernate.repository;
+package spring.learn.jpa_hibernate.repository.basics;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import spring.learn.jpa_hibernate.entity.Person;
+import spring.learn.jpa_hibernate.entity.basics.Person;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

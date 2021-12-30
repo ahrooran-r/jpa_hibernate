@@ -1,4 +1,4 @@
-package spring.learn.jpa_hibernate.repository;
+package spring.learn.jpa_hibernate.repository.basics;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

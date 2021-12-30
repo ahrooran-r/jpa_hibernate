@@ -1,4 +1,4 @@
-package spring.learn.jpa_hibernate.entity;
+package spring.learn.jpa_hibernate.entity.basics;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

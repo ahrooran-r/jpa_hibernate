@@ -11,7 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import spring.learn.jpa_hibernate.JpaHibernateApplication;
-import spring.learn.jpa_hibernate.entity.Course;
+import spring.learn.jpa_hibernate.entity.basics.Course;
+import spring.learn.jpa_hibernate.repository.basics.CourseJpaRepository;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = JpaHibernateApplication.class)

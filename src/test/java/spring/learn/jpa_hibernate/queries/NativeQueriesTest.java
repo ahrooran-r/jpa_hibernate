@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import spring.learn.jpa_hibernate.JpaHibernateApplication;
-import spring.learn.jpa_hibernate.entity.Course;
+import spring.learn.jpa_hibernate.entity.basics.Course;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
