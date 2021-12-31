@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -16,14 +17,22 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @Setter
+// -----------------------------------------------
 
-// following are important annotations
-@Cacheable // enables 2nd level cache
-// @SQLDelete(sql = "update course set is_deleted=true where id=?") // Hibernate only -> not JPA
-// // I can execute specific query when deleting or other such events instead of actually doing said event. This is called Soft Delete
-// @Where(clause = "isDeleted=false") // when doing a `select *`, it only retrieves non-marked rows
-@Entity
-@Table(name = "course")
+@Cacheable
+// enables 2nd level cache
+
+@SQLDelete(sql = "update course set is_deleted=true where id=?", check = ResultCheckStyle.COUNT)
+// Hibernate only -> not JPA
+// I can execute specific query when deleting or other such events instead of actually doing said event.
+// This is called Soft Delete -> https://thorben-janssen.com/implement-soft-delete-hibernate/
+// More on soft delete: https://www.jpa-buddy.com/blog/soft-deletion-in-hibernate-things-you-may-miss/
+@Where(clause = "is_deleted=false")
+// Hibernate only -> not JPA
+// when doing a `select *`, it only retrieves non-marked rows
+// NOTE: This approach does not work for `NativeQueries` and `NamedQueries`. So you have to manually add where clause
+// NOTE: the queries are native SQL, not JPQL. So this depends on underlying Database implementation
+
 @NamedQueries(
         value = {
                 @NamedQuery(name = "Course.deleteById", query = "delete from Course where id=:id"),
@@ -32,6 +41,8 @@ import java.time.LocalDateTime;
 )
 // you cannot simply give multiple @NamedQuery one after the other
 // hence do this work around
+@Entity
+@Table(name = "course")
 public class Course {
 
     @Id
@@ -46,11 +57,13 @@ public class Course {
     @UpdateTimestamp // Hibernate annotation -> there will be problems when migrating to another orm
     private LocalDateTime lastUpdated;
 
+    @Column(name = "is_deleted")
     private boolean isDeleted;
 
     // you cannot add default values by this method: https://stackoverflow.com/a/2554796/10582056
 
-    // Workaround to use JPA instead of hibernate: https://stackoverflow.com/a/42367173/10582056
+    // Workaround to use JPA instead of hibernate for @CreationTimestamp and @UpdateTimestamp:
+    // https://stackoverflow.com/a/42367173/10582056
 
     public Course(String name) {
         this.name = name;
@@ -60,4 +73,33 @@ public class Course {
         this.id = id;
         this.name = name;
     }
+
+    /**
+     * When we execute a @SQLDelete -> the column gets updated instead of deleted
+     * <p>
+     * But, hibernate does not know about this behaviour, because we are bypassing hibernate with Native SQL.
+     * It's like cheating on hibernate. So to inform hibernate, we have to manually set the value ourselves
+     * <p>
+     * That's where the Lifecycle methods come into play
+     */
+    @PreRemove
+    public void preRemove() {
+        isDeleted = true;
+    }
+
+    /*
+        There are other Lifecycle annotations as well:
+            1. @PreRemove -> runs before a removal
+            2. @PostRemove -> called after an entity is removed
+
+            3. @PrePersist -> runs before an entity is persisted
+            4. @PostPersist -> called after entity is persisted into the database
+
+            5. @PreUpdate -> runs before an entity is updated
+            6. @PostUpdate -> runs after an entity is updated
+
+            7. @PostLoad -> runs as soon as entity is retrieved from database and loaded
+    */
+
+
 }
