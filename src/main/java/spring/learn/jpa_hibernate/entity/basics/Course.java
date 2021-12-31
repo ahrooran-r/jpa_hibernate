@@ -14,7 +14,9 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @Setter
+
 // following are important annotations
+@Cacheable // enables 2nd level cache
 @Entity
 @Table(name = "course")
 @NamedQueries(
