@@ -8,7 +8,9 @@ create table course
     primary key (id),
     is_deleted   boolean      not null default false,
     created_on   timestamp             default now(),
-    last_updated timestamp on update now()
+    last_updated timestamp on update now(),
+    prefix       varchar(10),
+    number       varchar(10)
 );
 
 insert into course(name)

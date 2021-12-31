@@ -9,9 +9,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import spring.learn.jpa_hibernate.JpaHibernateApplication;
 import spring.learn.jpa_hibernate.entity.basics.Course;
+import spring.learn.jpa_hibernate.entity.basics.CourseCode;
 import spring.learn.jpa_hibernate.repository.basics.CourseJpaRepository;
 import spring.learn.jpa_hibernate.repository.speing_data.CourseSpringDataRepository;
 
@@ -39,6 +42,19 @@ class CourseRepositoryTests {
         Course course = courseRepository.findById(1);
         log.info("course = {}", course);
     }
+
+    @Test
+    @Transactional
+    @Rollback(value = false)
+    void updateAndFind() {
+
+        Course course = em.find(Course.class, 1L);
+        course.setCourseCode(new CourseCode("CS", "101"));
+
+        em.flush();
+        log.info("course = {}", course);
+    }
+
 
     /**
      * @ DirtiesContext -> resets the system to previous original state
