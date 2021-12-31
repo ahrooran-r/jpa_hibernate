@@ -10,7 +10,8 @@ create table course
     created_on   timestamp             default now(),
     last_updated timestamp on update now(),
     prefix       varchar(10),
-    number       varchar(10)
+    number       varchar(10),
+    rating       varchar(10)
 );
 
 insert into course(name)

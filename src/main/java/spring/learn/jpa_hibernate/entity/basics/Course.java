@@ -69,6 +69,10 @@ public class Course {
     @Embedded
     private CourseCode courseCode;
 
+    // We can use Enum instead of Strings. To convert enum <-> string, we can use @Enumerated
+    @Enumerated(EnumType.STRING)
+    private CourseRating rating;
+
     // you cannot add default values by this method: https://stackoverflow.com/a/2554796/10582056
 
     // Workaround to use JPA instead of hibernate for @CreationTimestamp and @UpdateTimestamp:
@@ -109,6 +113,4 @@ public class Course {
 
             7. @PostLoad -> runs as soon as entity is retrieved from database and loaded
     */
-
-
 }
