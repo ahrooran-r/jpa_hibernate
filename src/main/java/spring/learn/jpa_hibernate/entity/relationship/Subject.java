@@ -17,6 +17,12 @@ import java.util.List;
 // ---------------------------
 @Entity
 @Table(name = "subjects")
+@NamedQueries(
+        value = {
+                @NamedQuery(name = "Subject.getAllSubjects", query = "select s from Subject s"),
+                @NamedQuery(name = "Subject.getAllSubjects.joinFetch", query = "select s from Subject s join fetch s.students")
+        }
+)
 public class Subject {
 
     @Id
