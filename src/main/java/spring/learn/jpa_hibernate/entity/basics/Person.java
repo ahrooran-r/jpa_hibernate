@@ -1,5 +1,9 @@
 package spring.learn.jpa_hibernate.entity.basics;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,6 +12,8 @@ import java.util.Date;
  * <p>
  * @ Table is the actual DB table name
  */
+@Getter
+@Setter
 @Entity(name = "Person")
 @Table(name = "person")
 @NamedQuery(name = "find_all", query = "select p from Person p")
@@ -21,7 +27,9 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     // This works when `auto_increment` in mysql is enabled: https://stackoverflow.com/q/20603638/10582056
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, unique = true, insertable = false, updatable = false)
+    // Only access `id` field through constructor -> hence AccessLevel.NONE
+    @Setter(AccessLevel.NONE)
     private int id;
 
     // here both name in class and actual column name match

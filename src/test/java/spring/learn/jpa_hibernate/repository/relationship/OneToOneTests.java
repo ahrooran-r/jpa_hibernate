@@ -72,18 +72,18 @@ public class OneToOneTests {
         // see on next method ...
     }
 
-    @Transactional
+    @Transactional // <- Annotated for the method
     @Test
     public void lazyFetchExampleWorking() {
+
+        // to remove this problem: we have to do `@Transactional` on the method when do `LAZY FETCH`
+        // `@Transactional` open the session when method starts and closes session only when method ends
+        // so any LAZY calls within that method (aka while session is on) will be executed by JPA
 
         int id = 20_004;
         Student student = studentDao.findById(id);
         log.info("student with id: {} -> {}", id, student);
         log.info("passport -> {}", student.getPassport());
-
-        // to remove this problem: we have to do `@Transactional` on the method when do `LAZY FETCH`
-        // `@Transactional` open the session when method starts and closes session only when method ends
-        // so any LAZY calls within that method (aka while session is on) will be executed by JPA
     }
 
     @Transactional
@@ -98,9 +98,9 @@ public class OneToOneTests {
         // The PersistenceContext has all the entities which are being executed upon by the method
 
         // we access PersistenceContext through EntityManager
-        // -> this is why it is annotated with `@PersistenceContext EntityManager em;`
+        // -> this is why `EntityManager em` is annotated with `@PersistenceContext EntityManager em;`
 
-        // If there is no @Transactional is added to the method ->
+        // If there is no `@Transactional` added to the method ->
         // then all 1, 2, 3, 4 parts in this method will act as separate transactions
         // In that case 2nd part will throw exception because now `student` and `passport` are separated.
         // So `student` will have separate PersistenceContext and `passport` will have separate PersistenceContext
@@ -162,10 +162,9 @@ public class OneToOneTests {
 
         log.info("STUDENT -> {}", student);
 
-        // You will see that even though there is no @Transactional -> student is tracked and log prints updated value
-        // This is because the transaction support comes from `StudentRepository`
-        // if you go to the class `StudentRepository` -> you'll see that the class itself is annotated with @Transactional
-        // Hence `student` object will be tracked cause `studentDao.findById(id)` is from `StudentRepository`
+        // You will see that even though there is no @Transactional -> student is updated and log prints updated value
+        // However, the since student object is not tracked throughout, which prevents the new value
+        // to be pushed back to database
 
         // But as soon as we try to access passport, with `student.getPassport()` -> it will fail
         // because this method is from `Student` class and that is not annotated with @Transactional

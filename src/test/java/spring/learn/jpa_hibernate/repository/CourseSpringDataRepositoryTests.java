@@ -35,7 +35,7 @@ class CourseSpringDataRepositoryTests {
     @Test
     public void sort() {
 
-        // I can chain many sorts ine after another
+        // I can chain many sorts one after another
         Sort sort1 = Sort.by(Sort.Direction.DESC, "name");
         Sort sort2 = Sort.by(Sort.Direction.DESC, "createdOn");
 

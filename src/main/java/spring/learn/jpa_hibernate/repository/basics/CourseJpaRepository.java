@@ -10,7 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Repository
-// @Transactional -> a transaction is automatically started when entering the method and committed / rolled back at the end.
+// @Transactional -> a transaction is automatically `started` when entering the method
+//                      and `committed / rolled back` at the end.
 // NOTE: make sure to import Spring annotation -> import org.springframework.transaction.annotation.Transactional;
 @Transactional(isolation = Isolation.READ_COMMITTED)
 public class CourseJpaRepository {
@@ -24,7 +25,7 @@ public class CourseJpaRepository {
     }
 
     /**
-     * https://stackoverflow.com/a/1070629/10582056
+     * <a href="https://stackoverflow.com/a/1070629/10582056">https://stackoverflow.com/a/1070629/10582056</a>
      */
     public Course save(Course course) {
 
@@ -96,7 +97,7 @@ public class CourseJpaRepository {
         // those initial updates will be present in the retrieved course1 object
 
 
-        // If I want to detach everything (course1, course2, ... ), then I have ti call
+        // If I want to detach everything (course1, course2, ... ), then I have to call
         em.clear();
 
         // About flush: https://stackoverflow.com/a/4275973/10582056

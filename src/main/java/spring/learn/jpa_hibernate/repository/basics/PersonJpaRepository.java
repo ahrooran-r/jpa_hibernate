@@ -16,9 +16,11 @@ public class PersonJpaRepository {
     // connects to database -> EntityManager is the interface to PersistenceContext.
     // PersistenceContext tracks each call and automatically changes any operations made on the object
     // https://www.baeldung.com/jpa-hibernate-persistence-context
-    // @Autowired vs @PersistenceContext -> https://stackoverflow.com/a/58891587/10582056
+    // @Autowired vs @PersistenceContext -> https://stackoverflow.com/a/58891587/10582056 , https://stackoverflow.com/a/43341554/10582056
     @PersistenceContext
     EntityManager entityManager;
+
+    // Useful difference between Hibernate and JPA: https://www.baeldung.com/hibernate-save-persist-update-merge-saveorupdate
 
     public Person findById(int id) {
         return entityManager.find(Person.class, id);
@@ -40,6 +42,8 @@ public class PersonJpaRepository {
      * it knows the id of person from object provided and if the id already exist, then do update.
      * otherwise, do an insert.
      * so for both `update` and `insert`, same method `merge`.
+     * <p></p>
+     * <a href='https://stackoverflow.com/questions/1069992/jpa-entitymanager-why-use-persist-over-merge'>https://stackoverflow.com/questions/1069992/jpa-entitymanager-why-use-persist-over-merge</a>
      */
     public Person update(Person person) {
         return entityManager.merge(person);

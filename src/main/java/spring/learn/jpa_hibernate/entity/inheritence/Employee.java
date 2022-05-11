@@ -11,11 +11,14 @@ import javax.persistence.*;
 @Getter
 @Setter
 
+// 1
 // @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 // @DiscriminatorColumn(name = "employee_type")
 
+// 2
 // @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 
+// 3
 @Inheritance(strategy = InheritanceType.JOINED)
 
 @Entity

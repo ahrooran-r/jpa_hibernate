@@ -40,8 +40,8 @@ public class Passport {
     // A similar situation is happening here
 
     // Because `Student` owns `Passport` => an attributed of `Student` is mentioned in `Passport`
-    // mappedBy = 'passport'
-    // here 'passport' is the `private Passport passport;` attribute in Student class.
+    // mappedBy = "passport"
+    // here "passport" is the `private Passport passport;` attribute in Student class.
 
 
     public Passport(String number) {

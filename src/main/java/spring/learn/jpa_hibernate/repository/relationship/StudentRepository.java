@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @Repository
-@Transactional
+@Transactional // <- This entire class is annotated with `@Transactional`
 public class StudentRepository {
 
     @PersistenceContext

@@ -1,7 +1,7 @@
-# create database spring_jpa;
-# use spring_jpa;
+create database if not exists spring_jpa;
+use spring_jpa;
 
-drop table person;
+drop table if exists person;
 create table person
 (
     id         int          not null auto_increment,
@@ -15,4 +15,4 @@ INSERT INTO PERSON (ID, NAME, LOCATION, BIRTH_DATE ) VALUES(10001,  'Ranga', 'Hy
 INSERT INTO PERSON (ID, NAME, LOCATION, BIRTH_DATE ) VALUES(10002,  'James', 'New York',sysdate());
 INSERT INTO PERSON (ID, NAME, LOCATION, BIRTH_DATE ) VALUES(10003,  'Pieter', 'Amsterdam',sysdate());
 
-select* from person;
+select * from person;

@@ -1,6 +1,6 @@
 use spring_jpa;
 
-drop table course;
+drop table if exists course;
 create table course
 (
     id           int          not null auto_increment,

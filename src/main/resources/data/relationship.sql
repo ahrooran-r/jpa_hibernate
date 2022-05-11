@@ -1,6 +1,6 @@
 # drop database if exists spring_jpa;
-# create database if not exists spring_jpa;
-# use spring_jpa;
+create database if not exists spring_jpa;
+use spring_jpa;
 drop table if exists subjects, students, passports, reviews, subject_student;
 
 create table subjects
