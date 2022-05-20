@@ -1,16 +1,11 @@
 package spring.learn.jpa_hibernate.entity.relationship;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 // ---------------------------
 @Entity
 @Table(name = "reviews")
@@ -18,9 +13,18 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, updatable = false, insertable = false, unique = true)
+    @Setter(AccessLevel.NONE)
     private Integer id;
 
-    @Column(nullable = false)
+    /*
+     * DECIMAL(5,2)
+     * In this example, 5 is the precision and 2 is the scale.
+     * The precision represents the number of significant digits that are stored for values, and
+     * the scale represents the number of digits that can be stored following the decimal point.
+     * https://dev.mysql.com/doc/refman/8.0/en/fixed-point-types.html
+     * */
+    @Column(nullable = false, precision = 1)
     private int rating;
 
     @Column(length = 250)

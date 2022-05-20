@@ -11,7 +11,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-// ---------------------------
+// -------------------------------------------------------------------------------
+// can replace `@Getter`, `@Setter`, `@ToString` with `@Data`
+// BUT make sure to annotate `id` field as `@Setter(value = AccessLevel.NONE)`
 @Entity
 @Table(name = "passports")
 public class Passport {
