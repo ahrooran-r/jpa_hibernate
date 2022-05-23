@@ -5,9 +5,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-@NoArgsConstructor
 public class CourseCode {
     private String prefix;
     private String number;

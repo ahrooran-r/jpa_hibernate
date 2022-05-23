@@ -60,9 +60,10 @@ public class Course {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    // I don't to create a separate table for CourseCode and link that here
+    // I don't want to create a separate table for CourseCode and link that here
     // But rather I want fields in CourseCode to be present in the same `course` which this entity is mapped to
-    // However I want to maintain CourseCode in a separate class rather than add all its fields here for easier readability
+    // However I want to maintain CourseCode in a separate class rather than add all its fields here
+    // for easier readability
     // So there are no relationships here (unlike the OneToOne relationship between Student and Passport)
     // The solution is to make this field Embedded-Embeddable in both classes
     // @Embedded is used to manage single table with many classes

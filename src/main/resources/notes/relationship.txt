@@ -9,6 +9,6 @@ for `one to many` refer:
     3. OneToManyTests
 
 for `many to many` refer:
-    1. Student <-> Subject      // owning side: Review
+    1. Student <-> Subject      // owning side: Student
     2. StudentRepository, SubjectRepository
     3. ManyToManyTests
